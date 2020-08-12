@@ -85,13 +85,10 @@ public class CustomerServicesImpl implements CustomerServices {
             newCustomer.getOrders().add(newOrder);
         }
 
-
         //Many to one agent
         Agent newAgent = agentrepos.findById(newCustomer.getAgent().getAgentcode())
                 .orElseThrow(()-> new EntityNotFoundException("Agent " + newCustomer.getAgent().getAgentcode() + " Not Found"));
-
         newCustomer.setAgent(newAgent);
-
 
         return custrepos.save(newCustomer);
     }

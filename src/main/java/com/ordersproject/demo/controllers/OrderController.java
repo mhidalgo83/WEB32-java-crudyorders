@@ -42,4 +42,21 @@ public class OrderController {
         responseHeaders.setLocation(orderURI);
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
+
+    //PUT
+    // http://localhost:2019/orders/order/{ordnum}
+    @PutMapping(value = "/order/{ordnum}", consumes = "application/json")
+    public ResponseEntity<?> fullUpdateOrder(@Valid @RequestBody Order order, @PathVariable long ordnum) {
+        order.setOrdnum(ordnum);
+        orderServices.save(order);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //DELETE
+    // http://localhost:2019/orders/order/{ordnum}
+    @DeleteMapping(value = "/order/{ordnum}")
+    public ResponseEntity<?> deleteOrder(@PathVariable long ordnum) {
+        orderServices.delete(ordnum);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

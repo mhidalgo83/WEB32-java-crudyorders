@@ -6,6 +6,7 @@ public interface OrderServices {
 
     Order findOrderById(long id);
 
+    void delete(long id);
 
     Order save(Order order);
 }

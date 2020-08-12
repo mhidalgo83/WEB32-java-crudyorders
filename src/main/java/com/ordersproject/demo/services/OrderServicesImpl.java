@@ -9,6 +9,7 @@ import com.ordersproject.demo.repositories.OrdersRepository;
 import com.ordersproject.demo.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -57,5 +58,15 @@ public class OrderServicesImpl implements OrderServices{
     @Override
     public Order findOrderById(long id) {
         return ordersrepos.findById(id).orElseThrow(() -> new EntityNotFoundException("Order " + id + " Not Found"));
+    }
+
+    @Transactional
+    @Override
+    public void delete(long id) {
+        if(ordersrepos.findById(id).isPresent()) {
+            ordersrepos.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Order " + id + " Not Found");
+        }
     }
 }
